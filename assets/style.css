@@ -1,1 +1,10 @@
 /* need basic style so that the javaScript can edit: buttons same as background, colors, and text style */
+body{
+    font-family:'Courier New', Courier, monospace;
+    display:flex;
+    background-color: rgb(99, 92, 82);
+}
+header{
+    
+    
+}
