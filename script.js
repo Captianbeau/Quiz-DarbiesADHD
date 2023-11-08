@@ -2,9 +2,11 @@
 //timer for each question?
 
 //  
-var question = (".question")
-var answers = (".answers")
-var scoreLocation = (".score")
+var header = document.querySelector("header")
+var startbttn = document.querySelector("button")
+var questionSpace = document.querySelector(".question")
+var answers = document.querySelector(".answers")
+var scoreLocation = document.querySelector(".score")
 var score = [];
 var ques1 ={
     question:"What can stop cats from producing allergens?",
@@ -12,7 +14,7 @@ var ques1 ={
     B:"Making cats go vegan",
     C:"The most expensive angus beef",
     D:"Shaving their hair",
-    correct:"A"
+    correct: A
     // correct answer A
 }
 var ques2 ={
@@ -21,7 +23,7 @@ var ques2 ={
     B:"Red",
     C:"Blue",
     D:"Yellow",
-    correct:"C"
+    correct: C
 
 }
 var ques3 ={
@@ -30,7 +32,7 @@ var ques3 ={
     B:"Their prey is color blind",
     C:"To show they are dangerous",
     D:"They are brown",
-    correct:"B"
+    correct: B
 }
 var ques4 ={
     question:"What are daddy-long-legs?",
@@ -38,7 +40,7 @@ var ques4 ={
     B:"Scorpions and they aren't venomous at all",
     C:"The second most venomous spider in the world",
     D:"A delightful snack",
-    correct:"B"
+    correct: B
 }
 var ques5 ={
     question:"Why were bugs so big in the Carboniferous period?",
@@ -46,8 +48,16 @@ var ques5 ={
     B:"There weren't any animals to breathe so there was more oxygen",
     C:"Plants produced more oxygen because the ozone layer hadn't developed",
     D:"Trees couldn't decay so it trapped carbon and produced an abundance of oxygen ",
-    correct:"D"
+    correct: D
 }
-quiz = function(){
-    
+quiz = function(event){
+//    header.setAttribute('style','display:none')
+var ques = document.createElement('h2')
+ques.textContent(ques1.question)
+questionSpace.appendChild(ques)
+
 }
+quesChange = function(){
+if ()
+}
+startbttn.addEventListener('click',quiz())
