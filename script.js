@@ -8,47 +8,45 @@ var questionSpace = document.querySelector(".question")
 var answers = document.querySelector(".answers")
 var scoreLocation = document.querySelector(".score")
 var retryButton = document.querySelector(".retry")
+var message = document.querySelector("h3")
+var topFive = document.querySelector("ul")
 
 
-var score = [];
+
+
+var score = [0];
 var ques1 ={
     question:"What can stop cats from producing allergens?",
-    A:"Egg yolks from a chicken raised with cats",
-    B:"Making cats go vegan",
-    C:"The most expensive angus beef",
-    D:"Shaving their hair",
-    // correct: ques1.A
+    answers:["Egg yolks from a chicken raised with cats","Making cats go vegan","The most expensive angus beef","Shaving their hair"],
+    correct: document.querySelector('.A')
     // correct answer A
 }
 var ques2 ={
     question:"What pigment is extremely rare to find in nature?",
-    answers:["Purple","Red","Blue","Yellow"]
-   
-    // correct: ques2.C
-
+    answers:["Purple","Red","Blue","Yellow"],
+    correct: document.querySelector('.C')
+    // correct answer C
 }
 var ques3 ={
     question:"Why is a tiger orange?",
-    answers:["They're fancy","Their prey is color blind","To show they are dangerous","They are brown"]
-    // correct: ques3.B
+    answers:["They're fancy","Their prey is color blind","To show they are dangerous","They are brown"],
+    correct: document.querySelector('.B')
+    // correct answer B
 }
 var ques4 ={
     question:"What are daddy-long-legs?",
-    A:"The most venomous spider in the world",
-    B:"Scorpions and they aren't venomous at all",
-    C:"The second most venomous spider in the world",
-    D:"A delightful snack",
-    // correct: ques4.B
+    answers:["The most venomous spider in the world","Scorpions and they aren't venomous at all","The second most venomous spider in the world","A delightful snack"],
+    correct: document.querySelector('.B')
+    // correct answer B
 }
 var ques5 ={
     question:"Why were bugs so big in the Carboniferous period?",
-    A:"They had no predators so they could grow",
-    B:"There weren't any animals to breathe so there was more oxygen",
-    C:"Plants produced more oxygen because the ozone layer hadn't developed",
-    D:"Trees couldn't decay so it trapped carbon and produced an abundance of oxygen ",
-    // correct: ques5.D
+    answers:["They had no predators so they could grow","There weren't any animals to breathe so there was more oxygen","Plants produced more oxygen because the ozone layer hadn't developed","Trees couldn't decay so it trapped carbon and produced an abundance of oxygen "],
+    correct: document.querySelector('.D')
+    //correct answer D
 }
-
+startButton.addEventListener("click", quiz);
+answers.addEventListener("click", quesChange);
 
 function quiz(event){
 //hide header and display first question
@@ -59,19 +57,67 @@ answers.setAttribute("style","display:block");
 
 
 }
-function ques2Change(event){
+function quesChange(event){
 //go through questions and display if right or wrong
-if(questionSpace.children[0] == ques1.question){
+var notice = event.target;
+if(questionSpace.children[0].textContent == ques1.question){
 questionSpace.children[0].textContent = ques2.question;
 for( i = 0 ; i <= 4 ; i++){
 answers.children[i].textContent = ques2.answers[i];
-};
- } else if(questionSpace.children[0] == ques3.question)
- questionSpace.children[0].textContent = ques3.question;
-// for( i = 0 ; i <= 4; i++){
-// answers.children[i].textContent = ques3.answers[i];
-// }
 }
-startButton.addEventListener("click", quiz);
-answers.addEventListener("click", ques2Change);
+    if(notice.matches(".A")){
+    message.textContent = "correct"
+    score++
+    }else {
+        message.textContent = "wrong"
+    }
+} else if(questionSpace.children[0].textContent == ques2.question){
+ questionSpace.children[0].textContent = ques3.question;
+for( i = 0 ; i <= 4; i++){
+answers.children[i].textContent = ques3.answers[i];
+}
+if(notice.matches(".C")){
+    message.textContent = "correct"
+    score++
+    }else {
+        message.textContent = "wrong"
+    }
+} else if(questionSpace.children[0].textContent == ques3.question){
+questionSpace.children[0].textContent = ques4.question;
+for( i = 0 ; i <= 4; i++){
+answers.children[i].textContent = ques4.answers[i];
+}
+if(notice.matches(".B")){
+    message.textContent = "correct"
+    score++
+    }else {
+        message.textContent = "wrong"
+    }
+} else if(questionSpace.children[0].textContent == ques4.question){
+questionSpace.children[0].textContent = ques5.question;
+for( i = 0 ; i <= 4; i++){
+answers.children[i].textContent = ques5.answers[i];
+}
+if(notice.matches(".B")){
+    message.textContent = "correct"
+    score++
+    }else {
+        message.textContent = "wrong"
+    }
+} else{
+        if(notice.matches(".D")){
+        message.textContent = "correct"
+        score++
+        }else {
+            message.textContent = "wrong"
+        }
+    questionSpace.setAttribute("style","display:none");
+    answers.setAttribute("style","display:none");
+    scoreLocation.setAttribute("style","display:flex");
+    console.log(score)
+}
+}
+
+
+
 // add a function that calculates and displays score also more event listeners for answers and replay
