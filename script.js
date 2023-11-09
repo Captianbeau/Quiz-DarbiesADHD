@@ -51,13 +51,16 @@ var ques5 ={
     correct: D
 }
 quiz = function(event){
+//hide header and pullup first question
 //    header.setAttribute('style','display:none')
 var ques = document.createElement('h2')
-ques.textContent(ques1.question)
+ques.textContent(ques1['question'])
 questionSpace.appendChild(ques)
 
 }
 quesChange = function(){
+//go through questions and display if right or wrong
 if ()
 }
 startbttn.addEventListener('click',quiz())
+// add a function that calculates and displays score also more event listeners for answers and replay

@@ -2,9 +2,86 @@
 body{
     font-family:'Courier New', Courier, monospace;
     display:flex;
+    flex-wrap:wrap;
     background-color: rgb(99, 92, 82);
 }
+/* header start */
 header{
-    
+    margin-top:10%;
+    margin-left:30%;
+    margin-right:30%;
+    padding:50px;
+    /* display:none; */
+}
+h1{ 
+    padding:40px;
+    font-size:50px;
+}
+.start{
+    margin-top:30px;
+    margin-left:40%;
+    padding:20px;
+    font-size:30px;
+    border:dashed 10px burlywood;
+}
+
+/* question sections start */
+.question{ 
+    size: 150px;
+    padding:30px;
+    margin-top:20%;
+    margin-left:350px;
+    font-size:40px;
+    display: none;
+}
+.answers{
+    font-size:20px;
+    display: none;
     
 }
+button{
+   display:block; 
+   margin:10px;
+   margin-left: 45%;
+   padding:10px;
+   background-color:burlywood;
+}
+button:hover{
+    background-color: azure;
+    color: blueviolet;
+}
+button:focus{
+    background-color: aquamarine;
+    color:black;
+}
+/* question sections end */
+/* score section start */
+.score{
+    margin-top:10%;
+    margin-left:600px;
+    padding: 100px;
+    width:700px;
+    border:solid 5px blanchedalmond;
+    display:none;
+}
+.score h2{
+    font-size:100px;
+   text-decoration: underline;
+   margin-bottom: 20px;
+   text-align: center;
+}
+ul{
+    margin:10px;
+    
+}
+li{
+    margin:10px;
+    padding:10px;
+    font-size:20px;
+    background-color:antiquewhite;
+    text-align: center;
+}
+.score button {
+    margin-left:42%;
+}
+/* score section end */
