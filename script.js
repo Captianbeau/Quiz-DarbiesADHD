@@ -117,7 +117,7 @@ function quesChange(event) {
         }
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
-        scoreLocation.setAttribute("style", "display:flex");
+        scoreLocation.setAttribute("style", "display:block");
 
         localStorage.setItem("score", JSON.stringify(score));
 
