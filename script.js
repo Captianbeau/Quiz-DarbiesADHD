@@ -12,11 +12,8 @@ var message = document.querySelector("h3")
 var topFive = document.querySelector("ul")
 var input = document.querySelector(".name")
 
-
-var score = {
-    quizzerName: input.value.trim(),
-    scoreCount: [0]
-}
+var quizzerName = input.value.trim()
+var score = [0]
 
 var ques1 = {
     question: "What can stop cats from producing allergens?",
@@ -50,7 +47,7 @@ var ques5 = {
 }
 startButton.addEventListener("click", quiz);
 answers.addEventListener("click", quesChange);
-retryButton.addEventListener("click", startOver)
+retryButton.addEventListener("click", startOver);
 
 function quiz(event) {
     //hide header and display first question
@@ -58,60 +55,63 @@ function quiz(event) {
     header.setAttribute("style", "display:none");
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
-
-
 }
 function quesChange(event) {
     //go through questions and display if right or wrong
     var notice = event.target;
     if (questionSpace.children[0].textContent == ques1.question) {
         questionSpace.children[0].textContent = ques2.question;
-        for (i = 0; i <= 4; i++) {
+        for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques2.answers[i];
         }
         if (notice.matches(".A")) {
-            message.textContent = "correct"
-            score.scoreCount++
+            score++
+            message.textContent = "correct "+score
+            
         } else {
             message.textContent = "wrong"
         }
     } else if (questionSpace.children[0].textContent == ques2.question) {
         questionSpace.children[0].textContent = ques3.question;
-        for (i = 0; i <= 4; i++) {
+        for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques3.answers[i];
         }
         if (notice.matches(".C")) {
+            score++
             message.textContent = "correct"
-            score.scoreCount++
+            
         } else {
             message.textContent = "wrong"
         }
     } else if (questionSpace.children[0].textContent == ques3.question) {
         questionSpace.children[0].textContent = ques4.question;
-        for (i = 0; i <= 4; i++) {
+        for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques4.answers[i];
         }
         if (notice.matches(".B")) {
+            score++
             message.textContent = "correct"
-            score.scoreCount++
+            
         } else {
             message.textContent = "wrong"
         }
     } else if (questionSpace.children[0].textContent == ques4.question) {
         questionSpace.children[0].textContent = ques5.question;
-        for (i = 0; i <= 4; i++) {
+        for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques5.answers[i];
         }
         if (notice.matches(".B")) {
+            score++
             message.textContent = "correct"
-            score.scoreCount++
+            
         } else {
             message.textContent = "wrong"
         }
     } else {
         if (notice.matches(".D")) {
+            score++
             message.textContent = "correct"
-            score.scoreCount++
+            
         } else {
             message.textContent = "wrong"
         }
@@ -120,16 +120,24 @@ function quesChange(event) {
         scoreLocation.setAttribute("style", "display:block");
 
         localStorage.setItem("score", JSON.stringify(score));
+        localStorage.setItem("name", quizzerName);
+
+        // get name&score for-loop create li and insert only 5, set up a sort and remove least if the score is higher than the previous ones 
 
         var scoreList = document.createElement('li')
-        scoreList.textContent = scoreCount
+        scoreList.textContent = quizzerName+" "+score
         topFive.appendChild(scoreList)
-        console.log(scoreCount)
+        console.log(score)
     }
 }
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
     header.setAttribute("style", "display:block")
+    questionSpace.children[0].textContent = ques1.question
+    for (i = 0; i <= 3; i++) {
+        answers.children[i].textContent = ques1.answers[i];
+    }
+    score = [0]
 }
 
 
