@@ -11,9 +11,12 @@ var retryButton = document.querySelector(".retry")
 var message = document.querySelector("h3")
 var topFive = document.querySelector("ul")
 var input = document.querySelector(".name")
+var finalSDisplay = document.querySelector("p")
+
 
 var quizzerName = input.value.trim()
 var score = [0]
+
 
 var ques1 = {
     question: "What can stop cats from producing allergens?",
@@ -66,8 +69,8 @@ function quesChange(event) {
         }
         if (notice.matches(".A")) {
             score++
-            message.textContent = "correct "+score
-            
+            message.textContent = "correct " + score
+
         } else {
             message.textContent = "wrong"
         }
@@ -79,7 +82,7 @@ function quesChange(event) {
         if (notice.matches(".C")) {
             score++
             message.textContent = "correct"
-            
+
         } else {
             message.textContent = "wrong"
         }
@@ -91,7 +94,7 @@ function quesChange(event) {
         if (notice.matches(".B")) {
             score++
             message.textContent = "correct"
-            
+
         } else {
             message.textContent = "wrong"
         }
@@ -103,7 +106,7 @@ function quesChange(event) {
         if (notice.matches(".B")) {
             score++
             message.textContent = "correct"
-            
+
         } else {
             message.textContent = "wrong"
         }
@@ -111,24 +114,40 @@ function quesChange(event) {
         if (notice.matches(".D")) {
             score++
             message.textContent = "correct"
-            
+
         } else {
             message.textContent = "wrong"
         }
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
         scoreLocation.setAttribute("style", "display:block");
+        var finalScore = {
+            fname: [],
+            fscore:[]
+        }
+        // in order to save multiple then I need to push items into the object I am saving
+        // function that checks the score against the current ones in the array and pushes them out and in as needed
+        localStorage.setItem("finalScore", JSON.stringify(finalScore));
+        console.log(finalScore)
+        if (finalScore[i] < 5) {
+            
+            finalSDisplay.textContent = "final score: " + score;
+        } else if (finalScore = 5) {
 
-        localStorage.setItem("score", JSON.stringify(score));
-        localStorage.setItem("name", quizzerName);
+        }
 
-        // get name&score for-loop create li and insert only 5, set up a sort and remove least if the score is higher than the previous ones 
-
-        var scoreList = document.createElement('li')
-        scoreList.textContent = quizzerName+" "+score
-        topFive.appendChild(scoreList)
-        console.log(score)
     }
+    // for (i = 0; i <= 5; i++)
+    //     var scoreBoard = JSON.parse(localStorage.getItem("finalScore"));
+
+
+    // get name&score for-loop create li and insert only 5, set up a sort and remove least if the score is higher than the previous ones 
+
+
+    // var scoreList = document.createElement('li')
+    // scoreList.textContent = quizzerName+" "+score
+    // topFive.appendChild(scoreList)
+    // console.log(score)
 }
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
