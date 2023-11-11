@@ -9,5 +9,5 @@ var finalNames = {
         fscore:4},
     top: {fname:'john', 
         fscore:0},
-
+    // switch case if score is > replace or push 
 }

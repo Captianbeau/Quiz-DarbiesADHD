@@ -52,12 +52,30 @@ startButton.addEventListener("click", quiz);
 answers.addEventListener("click", quesChange);
 retryButton.addEventListener("click", startOver);
 
+var secondsLeft = 60;
+function setTime() {
+    // Sets interval in variable
+    var timerInterval = setInterval(function() {
+      secondsLeft--;
+      message.textContent = secondsLeft;
+  
+      if(secondsLeft === 0) {
+        // Stops execution of action at set interval
+        clearInterval(timerInterval);
+        // Calls function to create and append image
+        sendMessage();
+      }
+  
+    }, 1000);
+  }
+
 function quiz(event) {
     //hide header and display first question
     // event.preventDefault
     header.setAttribute("style", "display:none");
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
+    setTime()
 }
 function quesChange(event) {
     //go through questions and display if right or wrong
@@ -69,10 +87,16 @@ function quesChange(event) {
         }
         if (notice.matches(".A")) {
             score++
-            message.textContent = "correct " + score
+            message.textContent = secondsLeft+" correct " + score
 
+        } else if (secondsLeft === 0){
+            finalSDisplay.textContent = "Ran out of time"
+            questionSpace.setAttribute("style", "display:none");
+            answers.setAttribute("style", "display:none");
+            scoreLocation.setAttribute("style", "display:block");
+            return
         } else {
-            message.textContent = "wrong"
+            message.textContent = secondsLeft+" wrong " + score
         }
     } else if (questionSpace.children[0].textContent == ques2.question) {
         questionSpace.children[0].textContent = ques3.question;
@@ -81,10 +105,16 @@ function quesChange(event) {
         }
         if (notice.matches(".C")) {
             score++
-            message.textContent = "correct"
+            message.textContent = secondsLeft+" correct "+ score
 
+        } else if (secondsLeft === 0){
+            finalSDisplay.textContent = "Ran out of time"
+            questionSpace.setAttribute("style", "display:none");
+            answers.setAttribute("style", "display:none");
+            scoreLocation.setAttribute("style", "display:block");
+            return
         } else {
-            message.textContent = "wrong"
+            message.textContent = secondsLeft+" wrong "+ score
         }
     } else if (questionSpace.children[0].textContent == ques3.question) {
         questionSpace.children[0].textContent = ques4.question;
@@ -93,10 +123,16 @@ function quesChange(event) {
         }
         if (notice.matches(".B")) {
             score++
-            message.textContent = "correct"
+            message.textContent = secondsLeft+" correct "+ score
 
+        } else if (secondsLeft === 0){
+            finalSDisplay.textContent = "Ran out of time"
+            questionSpace.setAttribute("style", "display:none");
+            answers.setAttribute("style", "display:none");
+            scoreLocation.setAttribute("style", "display:block");
+            return
         } else {
-            message.textContent = "wrong"
+            message.textContent = secondsLeft+" wrong "+ score
         }
     } else if (questionSpace.children[0].textContent == ques4.question) {
         questionSpace.children[0].textContent = ques5.question;
@@ -105,58 +141,52 @@ function quesChange(event) {
         }
         if (notice.matches(".B")) {
             score++
-            message.textContent = "correct"
+            message.textContent = secondsLeft+" correct "+ score
 
-        } else {
-            message.textContent = "wrong"
+        } else if (secondsLeft === 0){
+            finalSDisplay.textContent = "Ran out of time"
+            questionSpace.setAttribute("style", "display:none");
+            answers.setAttribute("style", "display:none");
+            scoreLocation.setAttribute("style", "display:block");
+            return
+        }  else {
+            message.textContent = secondsLeft+" wrong "+ score
         }
+    
     } else {
-        if (notice.matches(".D")) {
-            score++
-            message.textContent = "correct"
-
-        } else {
-            message.textContent = "wrong"
-        }
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
         scoreLocation.setAttribute("style", "display:block");
-        var finalScore = {
-            fname: [],
-            fscore:[]
+        
+        if (notice.matches(".D")) {
+            score++
+            message.textContent = "correct "+ score
+
+        } else {
+            message.textContent = "wrong "+ score
         }
+        finalSDisplay.textContent = "final score: " + score;
+        }
+                
         // in order to save multiple then I need to push items into the object I am saving
-        // function that checks the score against the current ones in the array and pushes them out and in as needed
-        localStorage.setItem("finalScore", JSON.stringify(finalScore));
-        console.log(finalScore)
-        if (finalScore[i] < 5) {
-            
-            finalSDisplay.textContent = "final score: " + score;
-        } else if (finalScore = 5) {
-
-        }
-
+     // function that checks the score against the current ones in the array and pushes them out and in as needed
     }
-    // for (i = 0; i <= 5; i++)
-    //     var scoreBoard = JSON.parse(localStorage.getItem("finalScore"));
+    
+        
 
 
     // get name&score for-loop create li and insert only 5, set up a sort and remove least if the score is higher than the previous ones 
 
-
-    // var scoreList = document.createElement('li')
-    // scoreList.textContent = quizzerName+" "+score
-    // topFive.appendChild(scoreList)
-    // console.log(score)
-}
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
     header.setAttribute("style", "display:block")
     questionSpace.children[0].textContent = ques1.question
+    finalSDisplay.textContent = ""
     for (i = 0; i <= 3; i++) {
         answers.children[i].textContent = ques1.answers[i];
     }
-    score = [0]
+    score = [0];
+    secondsLeft = 60;
 }
 
 
