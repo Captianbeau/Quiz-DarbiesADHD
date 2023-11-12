@@ -1,8 +1,10 @@
 // needs timer, event listeners, prevents-default/propagation, data displays, content, style
 //timer for each question?
+// need to stop timer in final screen, reset name, why name is"", storage, 
 
 //  querySelectors start
 var header = document.querySelector(".header");
+var title = document.querySelector("h1")
 var startButton = document.querySelector("#start");
 var questionSpace = document.querySelector(".question");
 var answers = document.querySelector(".answers");
@@ -85,12 +87,15 @@ function setTime() {
 //timer functions end
 
 //quiz taking functions start
+
 function quiz(event) {
     header.setAttribute("style", "display:none");
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
-    setTime()
+    setTime()   
+
 }
+
 //quiz function end
 
 function quesChange(event) {
@@ -144,15 +149,20 @@ function quesChange(event) {
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
         scoreLocation.setAttribute("style", "display:block");
-        
-        if (notice.matches(".D")) {
+         if (notice.matches(".D")) {
             score++
             message.textContent = "correct "+ score
 
         } else {
             message.textContent = "wrong "+ score
         }
+       var finalScore = {
+        score: score,
+        quzName:quizzerName
+       }
+        topScores.push(finalScore);
         finalSDisplay.textContent = "final score: " + score;
+        console.log(finalScore)
         }
                 
         // in order to save multiple then I need to push items into the object I am saving
@@ -160,7 +170,24 @@ function quesChange(event) {
     }
     //quesChange function end
 function renderScoreBoard (){
-    var 
+
+    for(i = 0; i< topScores.length; i++){
+    var topScore = topScores[i];
+    var li = document.createElement("li");
+    li.textContent = topScore;
+    li.setAttribute("data-index",i)
+    topFive.appendChild(li);
+
+    }
+}
+function getScores(){
+    var storedScores = JSON.parse(localStorage.getItem("topScores"));
+    if(storedScores!== null){
+        topScores = storedScores
+    }
+}
+function storeTopScores(){
+    localStorage.setItem("topScores",JSON.stringify(topScores));
 }
 
 
@@ -176,6 +203,7 @@ function startOver(event) {
     }
     score = [0];
     secondsLeft = 60;
+    input.value = "";
 }
 //startOver function end
 //quiz taking functions end
