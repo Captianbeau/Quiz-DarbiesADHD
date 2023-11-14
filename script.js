@@ -185,16 +185,19 @@ function quesChange(event) {
         console.log(score)
         }
     }
+
+
+
     function scoreBoard(event){
         console.log(score)
         topScores.score.push(finalScore.score);
         topScores.sName.push(finalScore.sName);
         submit.setAttribute("style","display:none")
         scoreLocation.setAttribute("style", "display:block");
-        localStorage.setItem("topScores",JSON.stringify(topScores));
+       
         getScores();
         renderScoreBoard();
-        
+        saveScores();
     }
     //quesChange function end
 function renderScoreBoard (){
@@ -216,7 +219,9 @@ function getScores(){
     }
 }
 // getScores function end
-
+    function saveScores (){
+      localStorage.setItem("topScores",JSON.stringify(topScores));   
+    }
 
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
@@ -227,7 +232,7 @@ function startOver(event) {
     for (i = 0; i <= 3; i++) {
         answers.children[i].textContent = ques1.answers[i];
     }
-    quizzerName = '';
+    // quizzerName = '';
     resets()
     
 }
@@ -238,6 +243,6 @@ function resets(){
     quizzerName = input.value.trim();    
     timeStop = 0;
     
-    console.log(timeStop)
+    
 }
 //quiz taking functions end
