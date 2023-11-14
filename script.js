@@ -8,16 +8,28 @@ var questionSpace = document.querySelector(".question");
 var answers = document.querySelector(".answers");
 var scoreLocation = document.querySelector(".score");
 var retryButton = document.querySelector(".retry");
-var message = document.querySelector("h3");
+var timeLeft = document.querySelector("h3");
+var message = document.querySelector(".message");
+var submit = document.querySelector(".submit");
+var finalSDisplay = document.querySelector("p");
+var submitButton = document.querySelector(".enter")
+var outOfTime = document.querySelector(".OOT")
 var topFive = document.querySelector("ul");
 var input = document.querySelector(".name");
-var finalSDisplay = document.querySelector("p");
+
 // querySelectors end
 
 //user input variables
 var quizzerName = input.value.trim();
-var score = [0];
-var topScores = [];
+var score = 0;
+var topScores = {
+    score: [],
+    sName: []
+};
+var finalScore = {
+    score:score,
+    sName:quizzerName
+};
 // user input end
 
 // objects: questions start
@@ -56,27 +68,38 @@ var ques5 = {
 // eventListeners
 startButton.addEventListener("click", quiz);
 answers.addEventListener("click", quesChange);
+submitButton.addEventListener("click",scoreBoard);
 retryButton.addEventListener("click", startOver);
 // eventListeners end
 
 // timer functions start
-var secondsLeft = 20;
+var timeStop = 0;
+var secondsLeft = 60;
 function setTime() {
+    
     var timerInterval = setInterval(function() {
       secondsLeft--;
-      message.textContent = secondsLeft;
-  
+      timeLeft.textContent = secondsLeft;
       if(secondsLeft === 0) {
-        clearInterval(timerInterval);
-        timesUp();
+        clearInterval(timerInterval)
+        stopTimer()
       }
   
     }, 1000);
   }
+  function stopTimer(){
+    
+    if (timeStop == 0){
+        timesUp()
+    }
+    
+
+  }
    //setTime function end
 
   function timesUp(){
-    finalSDisplay.textContent = "Ran out of time"
+    outOfTime.textContent = "Ran out of time"
+    outOfTime.setAttribute("style","display:flex")
     questionSpace.setAttribute("style", "display:none");
     answers.setAttribute("style", "display:none");
     scoreLocation.setAttribute("style", "display:block");
@@ -105,9 +128,9 @@ function quesChange(event) {
         }
         if (notice.matches(".A")) {
             score++
-            message.textContent = secondsLeft+" correct " + score
+            message.textContent = " correct " + score;
         } else {
-            message.textContent = secondsLeft+" wrong " + score
+            message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques2.question) {
         questionSpace.children[0].textContent = ques3.question;
@@ -116,9 +139,10 @@ function quesChange(event) {
         }
         if (notice.matches(".C")) {
             score++
-            message.textContent = secondsLeft+" correct "+ score
+            
+            message.textContent = " correct " + score;
         } else {
-            message.textContent = secondsLeft+" wrong "+ score
+            message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques3.question) {
         questionSpace.children[0].textContent = ques4.question;
@@ -127,9 +151,10 @@ function quesChange(event) {
         }
         if (notice.matches(".B")) {
             score++
-            message.textContent = secondsLeft+" correct "+ score
+           
+            message.textContent = " correct " + score;
         } else {
-            message.textContent = secondsLeft+" wrong "+ score
+            message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques4.question) {
         questionSpace.children[0].textContent = ques5.question;
@@ -138,34 +163,38 @@ function quesChange(event) {
         }
         if (notice.matches(".B")) {
             score++
-            message.textContent = secondsLeft+" correct "+ score
-        }  else {
-            message.textContent = secondsLeft+" wrong "+ score
+            
+            message.textContent = " correct " + score;
+        } else {
+            message.textContent = " wrong " + score;
         }
     
     } else {
+        
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
-        scoreLocation.setAttribute("style", "display:block");
-        
+        submit.setAttribute("style","display:block")
+        timeStop++
          if (notice.matches(".D")) {
             score++
-            message.textContent = "correct "+ score
-
+            message.textContent = " correct " + score;
         } else {
-            message.textContent = "wrong "+ score
+            message.textContent = " wrong " + score;
         }
-       var finalScore = (score,quizzerName)
-        
-        topScores.push(finalScore);
-        finalSDisplay.textContent = "final score: " + score;
-        console.log(finalScore)
+        finalSDisplay.textContent = "Score: " + score;
+        console.log(score)
+        }
+    }
+    function scoreBoard(event){
+        console.log(score)
+        topScores.score.push(finalScore.score);
+        topScores.sName.push(finalScore.sName);
+        submit.setAttribute("style","display:none")
+        scoreLocation.setAttribute("style", "display:block");
+        localStorage.setItem("topScores",JSON.stringify(topScores));
         getScores();
         renderScoreBoard();
-         
-        }
-                
-
+        
     }
     //quesChange function end
 function renderScoreBoard (){
@@ -177,7 +206,7 @@ function renderScoreBoard (){
     li.setAttribute("data-index",i)
     topFive.appendChild(li);
 
-    storeTopScores();
+    
     }
 }
 function getScores(){
@@ -187,21 +216,28 @@ function getScores(){
     }
 }
 // getScores function end
-function storeTopScores(){
-    localStorage.setItem("topScores",JSON.stringify(topScores));
-}
-// storeTopScores function end
+
+
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
+    outOfTime.setAttribute("style","display:none")
     header.setAttribute("style", "display:block")
     questionSpace.children[0].textContent = ques1.question
     finalSDisplay.textContent = ""
     for (i = 0; i <= 3; i++) {
         answers.children[i].textContent = ques1.answers[i];
     }
-    score = [0];
-    secondsLeft = 60;
-    // input.value = 
+    quizzerName = '';
+    resets()
+    
 }
 //startOver function end
+function resets(){
+    score = [0];
+    secondsLeft = 60;
+    quizzerName = input.value.trim();    
+    timeStop = 0;
+    
+    console.log(timeStop)
+}
 //quiz taking functions end
