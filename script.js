@@ -2,7 +2,6 @@
 
 //  querySelectors start
 var header = document.querySelector(".header");
-var title = document.querySelector("h1")
 var startButton = document.querySelector("#start");
 var questionSpace = document.querySelector(".question");
 var answers = document.querySelector(".answers");
@@ -20,9 +19,9 @@ var input = document.querySelector(".name");
 // querySelectors end
 
 //user input variables
-var quizzerName = input.value.trim();
+
 var score = 0;
-var topScores = [];
+var topScores = JSON.parse(localStorage.getItem("topScores"))||[];
 // user input end
 
 // objects: questions start
@@ -107,7 +106,7 @@ function quiz(event) {
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
     setTime()   
-    console.log(finalScore)
+    
 }
 
 //quiz function end
@@ -123,6 +122,7 @@ function quesChange(event) {
             score++
             message.textContent = " correct " + score;
         } else {
+            secondsLeft= secondsLeft-10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques2.question) {
@@ -135,6 +135,7 @@ function quesChange(event) {
             
             message.textContent = " correct " + score;
         } else {
+            secondsLeft= secondsLeft-10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques3.question) {
@@ -147,6 +148,7 @@ function quesChange(event) {
            
             message.textContent = " correct " + score;
         } else {
+            secondsLeft= secondsLeft-10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques4.question) {
@@ -159,6 +161,7 @@ function quesChange(event) {
             
             message.textContent = " correct " + score;
         } else {
+            secondsLeft= secondsLeft-10
             message.textContent = " wrong " + score;
         }
     
@@ -168,6 +171,7 @@ function quesChange(event) {
         answers.setAttribute("style", "display:none");
         submit.setAttribute("style","display:block")
         timeStop++
+        
          if (notice.matches(".D")) {
             score++
             message.textContent = " correct " + score;
@@ -182,39 +186,46 @@ function quesChange(event) {
 
 
     function scoreBoard(event){
-        
+        event.preventDefault()
+        var quizzerName = input.value.trim();
         var stringScore = score.toString()
-        var finalScore = [stringScore,quizzerName]
+        if(quizzerName.length>0){
+        var finalScore = {
+            qName:quizzerName,
+            score: stringScore
+        }
         topScores.push(finalScore);
         console.log(finalScore)
         submit.setAttribute("style","display:none")
         scoreLocation.setAttribute("style", "display:block");
        
-        getScores();
+        // getScores();
         renderScoreBoard();
         saveScores();
     }
+    }
     //quesChange function end
 function renderScoreBoard (){
-
+    topFive.innerHTML = ''
     for(i = 0; i< topScores.length; i++){
-    var topScore = topScores[i];
+    var entry = topScores[i];
     var li = document.createElement("li");
-    li.textContent = topScore;
+    li.textContent = "name: "+entry.qName+" score: "+entry.score;
     li.setAttribute("data-index",i)
     topFive.appendChild(li);
 
     
     }
 }
-function getScores(){
-    var storedScores = JSON.parse(localStorage.getItem("topScores"));
-    if(storedScores!== null){
-        topScores = storedScores
-    }
-}
+// function getScores(){
+//     var storedScores = JSON.parse(localStorage.getItem("topScores"));
+//     if(storedScores!== null){
+//         topScores = storedScores
+//     }
+// }
 // getScores function end
     function saveScores (){
+        console.log(topScores)
       localStorage.setItem("topScores",JSON.stringify(topScores));   
     }
 
