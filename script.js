@@ -22,14 +22,7 @@ var input = document.querySelector(".name");
 //user input variables
 var quizzerName = input.value.trim();
 var score = 0;
-var topScores = {
-    score: [],
-    sName: []
-};
-var finalScore = {
-    score:score,
-    sName:quizzerName
-};
+var topScores = [];
 // user input end
 
 // objects: questions start
@@ -114,7 +107,7 @@ function quiz(event) {
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
     setTime()   
-
+    console.log(finalScore)
 }
 
 //quiz function end
@@ -189,9 +182,11 @@ function quesChange(event) {
 
 
     function scoreBoard(event){
-        console.log(score)
-        topScores.score.push(finalScore.score);
-        topScores.sName.push(finalScore.sName);
+        
+        var stringScore = score.toString()
+        var finalScore = [stringScore,quizzerName]
+        topScores.push(finalScore);
+        console.log(finalScore)
         submit.setAttribute("style","display:none")
         scoreLocation.setAttribute("style", "display:block");
        
