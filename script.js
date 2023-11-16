@@ -1,6 +1,4 @@
-// needs timer, event listeners, prevents-default/propagation, data displays, content, style
-
-//  querySelectors start
+//  querySelectors
 var header = document.querySelector(".header");
 var startButton = document.querySelector("#start");
 var questionSpace = document.querySelector(".question");
@@ -15,16 +13,14 @@ var submitButton = document.querySelector(".enter")
 var outOfTime = document.querySelector(".OOT")
 var topFive = document.querySelector("ul");
 var input = document.querySelector(".name");
-
 // querySelectors end
 
 //user input variables
-
 var score = 0;
-var topScores = JSON.parse(localStorage.getItem("topScores"))||[];
+var topScores = JSON.parse(localStorage.getItem("topScores")) || [];
 // user input end
 
-// objects: questions start
+// objects: questions
 var ques1 = {
     question: "What can stop cats from producing allergens?",
     answers: ["Egg yolks from a chicken raised with cats", "Making cats go vegan", "The most expensive angus beef", "Shaving their hair"],
@@ -60,7 +56,7 @@ var ques5 = {
 // eventListeners
 startButton.addEventListener("click", quiz);
 answers.addEventListener("click", quesChange);
-submitButton.addEventListener("click",scoreBoard);
+submitButton.addEventListener("click", scoreBoard);
 retryButton.addEventListener("click", startOver);
 // eventListeners end
 
@@ -68,53 +64,50 @@ retryButton.addEventListener("click", startOver);
 var timeStop = 0;
 var secondsLeft = 60;
 function setTime() {
-    
-    var timerInterval = setInterval(function() {
-      secondsLeft--;
-      timeLeft.textContent = secondsLeft;
-      if(secondsLeft === 0) {
-        clearInterval(timerInterval)
-        stopTimer()
-      }
-  
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timeLeft.textContent = secondsLeft;
+
+        if (secondsLeft === 0) {
+            clearInterval(timerInterval)
+            stopTimer()
+        }
     }, 1000);
-  }
-  function stopTimer(){
-    
-    if (timeStop == 0){
+}
+// setTime end
+
+function stopTimer() {
+    if (timeStop == 0) {
         timesUp()
     }
-    
+}
+//stopTimer function end
 
-  }
-   //setTime function end
-
-  function timesUp(){
+function timesUp() {
     outOfTime.textContent = "Ran out of time"
-    outOfTime.setAttribute("style","display:flex")
+    outOfTime.setAttribute("style", "display:flex")
     questionSpace.setAttribute("style", "display:none");
     answers.setAttribute("style", "display:none");
     scoreLocation.setAttribute("style", "display:block");
-  }
+}
   //timesUp function end
 //timer functions end
 
 //quiz taking functions start
-
 function quiz(event) {
     header.setAttribute("style", "display:none");
     questionSpace.setAttribute("style", "display:flex");
     answers.setAttribute("style", "display:block");
-    setTime()   
-    
-}
+    setTime()
 
+}
 //quiz function end
 
 function quesChange(event) {
     var notice = event.target;
     if (questionSpace.children[0].textContent == ques1.question) {
         questionSpace.children[0].textContent = ques2.question;
+
         for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques2.answers[i];
         }
@@ -122,133 +115,129 @@ function quesChange(event) {
             score++
             message.textContent = " correct " + score;
         } else {
-            secondsLeft= secondsLeft-10
+            secondsLeft = secondsLeft - 10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques2.question) {
         questionSpace.children[0].textContent = ques3.question;
+
         for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques3.answers[i];
         }
         if (notice.matches(".C")) {
             score++
-            
+
             message.textContent = " correct " + score;
         } else {
-            secondsLeft= secondsLeft-10
+            secondsLeft = secondsLeft - 10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques3.question) {
         questionSpace.children[0].textContent = ques4.question;
+
         for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques4.answers[i];
         }
         if (notice.matches(".B")) {
             score++
-           
+
             message.textContent = " correct " + score;
         } else {
-            secondsLeft= secondsLeft-10
+            secondsLeft = secondsLeft - 10
             message.textContent = " wrong " + score;
         }
     } else if (questionSpace.children[0].textContent == ques4.question) {
         questionSpace.children[0].textContent = ques5.question;
+
         for (i = 0; i <= 3; i++) {
             answers.children[i].textContent = ques5.answers[i];
         }
         if (notice.matches(".B")) {
             score++
-            
+
             message.textContent = " correct " + score;
         } else {
-            secondsLeft= secondsLeft-10
+            secondsLeft = secondsLeft - 10
             message.textContent = " wrong " + score;
         }
-    
     } else {
-        
         questionSpace.setAttribute("style", "display:none");
         answers.setAttribute("style", "display:none");
-        submit.setAttribute("style","display:block")
+        submit.setAttribute("style", "display:block")
         timeStop++
-        
-         if (notice.matches(".D")) {
+
+        if (notice.matches(".D")) {
             score++
             message.textContent = " correct " + score;
         } else {
             message.textContent = " wrong " + score;
         }
+
         finalSDisplay.textContent = "Score: " + score;
-        console.log(score)
-        }
     }
+}
+// quesChange function end
+// quiz taking functions end
 
+// scoring functions start
+function scoreBoard(event) {
+    event.preventDefault()
+    var quizzerName = input.value.trim();
+    var stringScore = score.toString()
 
-
-    function scoreBoard(event){
-        event.preventDefault()
-        var quizzerName = input.value.trim();
-        var stringScore = score.toString()
-        if(quizzerName.length>0){
+    if (quizzerName.length > 0) {
         var finalScore = {
-            qName:quizzerName,
+            qName: quizzerName,
             score: stringScore
         }
         topScores.push(finalScore);
-        console.log(finalScore)
-        submit.setAttribute("style","display:none")
+        submit.setAttribute("style", "display:none")
         scoreLocation.setAttribute("style", "display:block");
-       
-        // getScores();
         renderScoreBoard();
         saveScores();
     }
-    }
-    //quesChange function end
-function renderScoreBoard (){
-    topFive.innerHTML = ''
-    for(i = 0; i< topScores.length; i++){
-    var entry = topScores[i];
-    var li = document.createElement("li");
-    li.textContent = "name: "+entry.qName+" score: "+entry.score;
-    li.setAttribute("data-index",i)
-    topFive.appendChild(li);
+}
+// scoreBoard function end
 
+function renderScoreBoard() {
+    topFive.innerHTML = ''
     
+    for (i = 0; i < topScores.length; i++) {
+        var entry = topScores[i];
+        var li = document.createElement("li");
+        li.textContent = "name: " + entry.qName + " score: " + entry.score;
+        li.setAttribute("data-index", i)
+        topFive.appendChild(li);
     }
 }
-// function getScores(){
-//     var storedScores = JSON.parse(localStorage.getItem("topScores"));
-//     if(storedScores!== null){
-//         topScores = storedScores
-//     }
-// }
-// getScores function end
-    function saveScores (){
-        console.log(topScores)
-      localStorage.setItem("topScores",JSON.stringify(topScores));   
-    }
+// renderScoreBoard function end
 
+function saveScores() {
+    localStorage.setItem("topScores", JSON.stringify(topScores));
+}
+  // saveScores function end
+// scoring functions end
+
+// retry functions start
 function startOver(event) {
     scoreLocation.setAttribute("style", "display:none")
-    outOfTime.setAttribute("style","display:none")
+    outOfTime.setAttribute("style", "display:none")
     header.setAttribute("style", "display:block")
     questionSpace.children[0].textContent = ques1.question
     finalSDisplay.textContent = ""
     for (i = 0; i <= 3; i++) {
         answers.children[i].textContent = ques1.answers[i];
     }
-    // quizzerName = '';
     resets()
-    
+
 }
 //startOver function end
-function resets(){
+
+function resets() {
     score = [0];
     secondsLeft = 60;
-    quizzerName = input.value.trim();    
+    quizzerName = input.value.trim();
     timeStop = 0;
-    
-    
 }
-//quiz taking functions end
+  //resets function end
+//retry functions end
