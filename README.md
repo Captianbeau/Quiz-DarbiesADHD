@@ -14,7 +14,7 @@ Then answer all five questions to the best of your ability by clicking each desi
 In the top right corner there is the timer and a box that will display your score and if the question was answered correctly.
 ![Timer and Score](./assets/screenshots/timerAndScore.png)![Correct](./assets/screenshots/timerAndScore2C.png)![Wrong](./assets/screenshots/timeerAndScore3W.png)\
 When all the questions are answered you type in your name or initials and click submit.
-![Submit textbox and button](./assets/screenshots/startButton.png)\
+![Submit textbox and button](./assets/screenshots/submitButtonText.png)\
 A list of previous scores will appear with your own added on!\
 ![Score list](./assets/screenshots/scoreList.png)\
 If you want to try again then click the retry button, under the list, and it will take you back to the start.\
@@ -22,5 +22,5 @@ If you want to try again then click the retry button, under the list, and it wil
 ## Screenshots
 ![Start Screen](./assets/screenshots/startScreen.png)
 ![Question Screen](./assets/screenshots/questionScreen.png)
-![Submit Screen](./assets/screenshots/scoreScreen.png)
+![Submit Screen](./assets/screenshots/submitScreen.png)
 ![Score Screen](./assets/screenshots/scoreScreen.png)
